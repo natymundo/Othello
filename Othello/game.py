@@ -1,7 +1,8 @@
 import tkinter as tk
 import othello as oth
 
-class Couleurs(dict):    
+# un petit dictionnaire de couleurs (c'était pas joli noir et blanc)
+class Couleurs(dict):   # pour définir une valeur par défaut
     def __missing__(self, key):
         return 'yellow'
 
@@ -10,6 +11,7 @@ couleurs[oth.NOIR]='Red'
 couleurs[oth.BLANC]='Green'
 couleurs[oth.VIDE]='White'
 
+# des valeurs utiles, facilement changeables qui pourront faire partie un jour d'un fichier config
 sizeV = oth.SIZE
 sizeH = len(oth.COLONNES)
 zoom = 20
@@ -19,23 +21,20 @@ class Game(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.jeu = oth.Othello()
-        self.joueur = couleur
+        self.joueur = couleur  #self.joueur est la couleur du joueur, self.jeu.joueur est la couleur de celui dont c'est le tour
         self.create_widgets()
 
-    def jouer(self, event):
-        # if self.joueur == self.jeu.joueur: #si c'est au tour de l'humain de jouer
-            ligne = int((event.x - zoom)/zoom)
-            colonne = int((event.y - zoom)/zoom)
-            self.jeu.playJoueur(ligne, colonne)   
-        # else:
-            # self.jeu.playAI()
-            self.drawtable(self.jeu.jeu)   
+    def jouer(self, event):  # activé par un clic sur la surface de jeu
+        ligne = int((event.x - zoom)/zoom)
+        colonne = int((event.y - zoom)/zoom)
+        self.jeu.playJoueur(ligne, colonne)   
+        self.drawtable(self.jeu.jeu)   
         
-    def next(self):
+    def next(self): # activé par le bouton 'AI'
         self.jeu.playAI()
         self.drawtable(self.jeu.jeu)
 
-    def nouveau_jeu(self):
+    def nouveau_jeu(self): # activé par le bouton 'Changer de couleur'
         """ Commence une nouvelle partie avec l'autre couleur """
         self.label_couleur_couleur.destroy()
         self.__init__(master=self.master, couleur=-self.joueur)
@@ -44,6 +43,7 @@ class Game(tk.Frame):
             self.drawtable(self.jeu.jeu)
         
     def help(self):
+        """ Fait apparaître les cases jouables """
         hilfe = self.jeu.casesJouables(self.jeu.joueur)
         self.drawtable(hilfe)
 
@@ -51,6 +51,10 @@ class Game(tk.Frame):
         return self.jeu.score()
 
     def drawtable(self, table):
+        """ 
+            Dessine la table de jeu dans le canvas,
+            et met à jour le score
+        """
         for l in range(oth.SIZE):
             for k in range(len(oth.COLONNES)):
                 rec = self.C.create_rectangle((l+1)*zoom, (k+1)*zoom, (l+2)*zoom, (k+2)*zoom, tag='case')
@@ -107,7 +111,7 @@ class Game(tk.Frame):
         self.C.bind('<Button-1>', self.jouer)
 
 
-
+# Une classe inutile pour le moment -- en attente de maîtriser les virtual event
 class Nouveau_Jeu(tk.Frame):
     def __init__(self, master=None, couleur=oth.NOIR):
         tk.Frame.__init__(self, master)
@@ -119,7 +123,7 @@ class Nouveau_Jeu(tk.Frame):
     def annul(self):
         self.master.destroy()
 
-    def valid(self):  ####
+    def valid(self):  #### ICI!!
         self.master.destroy()
 
     def to_noir(self):
