@@ -169,12 +169,4 @@ class Othello:
             pass
                     
         
-##oth = Othello()
-##oth.playAI()
-##oth.next()
-##oth.playAI()
-##
-##
-##with open('othello.txt', 'w') as file:
-##    file.write(oth.__str__())
 
