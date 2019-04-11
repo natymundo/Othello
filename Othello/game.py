@@ -14,7 +14,7 @@ couleurs[oth.VIDE]='White'
 # des valeurs utiles, facilement changeables qui pourront faire partie un jour d'un fichier config
 sizeV = oth.SIZE
 sizeH = len(oth.COLONNES)
-zoom = 20
+zoom = 40
 
 class Game(tk.Frame):
     def __init__(self, master=None, couleur=oth.NOIR):
@@ -96,7 +96,7 @@ class Game(tk.Frame):
     def create_label_score(self):
         self.label_score_score = tk.Label(self.master,
                                     text=f'{couleurs[oth.NOIR]}={self.scoreN()}|{couleurs[oth.BLANC]}={self.scoreB()}',
-                                    fg=couleurs[self.gagnant()])
+                                    fg=couleurs[self.gagnant()], bg='White')
         self.label_score_score.grid(row=4, column=1, columnspan=2)
 
     def drawtable(self, table):
@@ -133,12 +133,12 @@ class Game(tk.Frame):
         self.label_couleur_info.grid(row=1, column=1, columnspan=2, sticky=tk.W)
         self.label_couleur_couleur.grid(row=2, column=1, columnspan=2)
         self.label_score.grid(row=3, column=1, columnspan=2, sticky=tk.W)
-        self.bouton_nouveau.grid(row=sizeV+3, column=sizeH+3, sticky=tk.E)
+        self.bouton_nouveau.grid(row=sizeV+3, column=sizeH+4, sticky=tk.E)
         self.bouton_help.grid(row=sizeV+4, column=3, sticky=tk.W)
-        self.bouton_quit.grid(row=sizeV+4, column=sizeH+3, sticky=tk.E)
+        self.bouton_quit.grid(row=sizeV+4, column=sizeH+4, sticky=tk.E)
         self.label_case.grid(row=5, column=1, columnspan=2, sticky=tk.W)
         self.rowconfigure(sizeV+4, pad=2)
-        self.columnconfigure(sizeH+3, pad=2)
+        self.columnconfigure(sizeH+4, pad=2)
         
         self.create_label_score()
 
